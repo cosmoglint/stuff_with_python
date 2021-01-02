@@ -21,6 +21,10 @@ min_survival = len(target) * variables
 samples_per_generation = 10
 
 
+def selection(generation_list):
+    pass
+def mutate(current,prob_list):
+    pass
 
 def survival_score(current,target):
     score = 0
