@@ -81,7 +81,7 @@ def main():
         generation += 1
         org_score, org_var_list, org = selection(generation_list)
         generation_list = [mutate(org,org_var_list) for i in range(samples_per_generation)]
-        print(org)
+        print(generation_list)
     return generation
 
 print(main())
