@@ -54,10 +54,19 @@ def survival_score(current,target):
         score += abs(cur_score)
     return score, current_variation_list
 
+def test(tester,target):
+    t_score, t_current_variation_list = survival_score(tester,target)
+    new = tester
+    for i in range(10):
+        new = mutate(new,t_current_variation_list)
+        t_score, t_current_variation_list = survival_score(new,target)
+    return new
 
 
+print(test(tester,target))
 
-t_score, t_current_variation_list = survival_score(tester,target)
-print(t_score,t_current_variation_list)
-print(mutate(tester,t_current_variation_list))
-print(alphabets_up,alphabets_low)
+
+# t_score, t_current_variation_list = survival_score(tester,target)
+# print(t_score,t_current_variation_list)
+# print(mutate(tester,t_current_variation_list))
+# print(alphabets_up,alphabets_low)
