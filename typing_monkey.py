@@ -40,10 +40,8 @@ def mutate(current,current_variation_list):
         else:
             rand_change = random.randint(min(current_variation_list[i],0),max(current_variation_list[i],0))
             rand_ind = alphabets_sample.index(current[i]) + rand_change
-            print(alphabets_sample.index(current[i]))
-            print(rand_ind)
             # new += random.choice(alphabets_sample)
-            new += alphabets_sample[rand_change]
+            new += alphabets_sample[rand_ind]
     return new
 
 
