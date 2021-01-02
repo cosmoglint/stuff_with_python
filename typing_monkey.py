@@ -22,7 +22,7 @@ variables = 27   # "a" - "z" and " "
 # this is the highest value of survival you can get
 min_survival = len(target) * variables
 
-samples_per_generation = 2
+samples_per_generation = 10
 generation_list = ["".join(random.choices(alphabets_sample,k=len(target))) for i in range(samples_per_generation)]
 
 
