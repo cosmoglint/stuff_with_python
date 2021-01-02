@@ -69,8 +69,22 @@ def test(tester,target):
 
 
 # print(test(tester,target))
-print(selection(generation_list))
+# print(selection(generation_list))
 
+def main():
+    global generation_list, samples_per_generation
+
+    generation = 0
+    org_score, org_var_list, org = selection(generation_list)
+    generation_list = [mutate(org,org_var_list) for i in range(samples_per_generation)]
+    while (org != target):
+        generation += 1
+        org_score, org_var_list, org = selection(generation_list)
+        generation_list = [mutate(org,org_var_list) for i in range(samples_per_generation)]
+        print(org)
+    return generation
+
+print(main())
 
 # t_score, t_current_variation_list = survival_score(tester,target)
 # print(t_score,t_current_variation_list)
