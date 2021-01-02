@@ -7,8 +7,8 @@ target = "METHINKS IT IS LIKE A WEASEL"
 
 
 # tester = "METHINKS IT IS LIKE A WEASEL"
-# tester = "YETHINKSPITXISHLIKEFA WQYSEY"
-tester = "SETHINKSRITHISXLIKEEA WBDSEP"
+tester = "YETHINKSAITXISHLIKEFA WQYSEY"
+# tester = "SETHINKSRITHISXLIKEEA WBDSEP"
 
 
 # these will be the sample sets for the monkey
@@ -22,12 +22,16 @@ variables = 27   # "a" - "z" and " "
 # this is the highest value of survival you can get
 min_survival = len(target) * variables
 
-samples_per_generation = 10
+samples_per_generation = 3
+generation_list = ["".join(random.choices(alphabets_sample,k=len(target))) for i in range(samples_per_generation)]
 
 
 
 def selection(generation_list):
-    pass
+    global target
+    selected_org = min([tuple(survival_score(org,target)) + (org,)  for org in generation_list])
+    return selected_org
+
 def mutate(current,current_variation_list):
     global alphabets_sample
     new = ""
@@ -55,15 +59,17 @@ def survival_score(current,target):
     return score, current_variation_list
 
 def test(tester,target):
+    global samples_per_generation
     t_score, t_current_variation_list = survival_score(tester,target)
     new = tester
-    for i in range(10):
+    for i in range(samples_per_generation):
         new = mutate(new,t_current_variation_list)
         t_score, t_current_variation_list = survival_score(new,target)
     return new
 
 
-print(test(tester,target))
+# print(test(tester,target))
+print(selection(generation_list))
 
 
 # t_score, t_current_variation_list = survival_score(tester,target)
