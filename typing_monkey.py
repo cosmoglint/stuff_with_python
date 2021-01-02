@@ -48,7 +48,7 @@ def survival_score(current,target):
     current_variation_list = []
     for i,val in enumerate(current):
         # cur_score = ord(val) - ord(target[i])
-        cur_score = alphabets_sample.index(val) - alphabets_sample.index(target[i])
+        cur_score =  - alphabets_sample.index(val) + alphabets_sample.index(target[i])
 
         current_variation_list.append(cur_score)
         score += abs(cur_score)
