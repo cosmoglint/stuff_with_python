@@ -57,7 +57,7 @@ def survival_score(current,target):
 def test(tester,target):
     t_score, t_current_variation_list = survival_score(tester,target)
     new = tester
-    for i in range(2):
+    for i in range(10):
         new = mutate(new,t_current_variation_list)
         t_score, t_current_variation_list = survival_score(new,target)
     return new
