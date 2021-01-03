@@ -7,8 +7,8 @@ target = "METHINKS IT IS LIKE A WEASEL"
 
 
 # tester = "METHINKS IT IS LIKE A WEASEL"
-# tester = "YETHINKSPITXISHLIKEFA WQYSEY"
-tester = "SETHINKSRITHISXLIKEEA WBDSEP"
+# tester = "YETHINKSAITXISHLIKEFA WQYSEY"
+# tester = "SETHINKSRITHISXLIKEEA WBDSEP"
 
 
 # these will be the sample sets for the monkey
@@ -23,11 +23,27 @@ variables = 27   # "a" - "z" and " "
 min_survival = len(target) * variables
 
 samples_per_generation = 10
+generation_list = ["".join(random.choices(alphabets_sample,k=len(target))) for i in range(samples_per_generation)]
 
 
 
 def selection(generation_list):
-    pass
+    global target
+    selected_org = min([tuple(survival_score(org,target)) + (org,)  for org in generation_list])
+    return selected_org
+
+# def mutate(current,current_variation_list):
+#     global alphabets_sample
+#     new = ""
+#     for i,val in enumerate(current_variation_list):
+#         if not(val):
+#             new += current[i]
+#         else:
+#             rand_change = random.randint(min(current_variation_list[i],0),max(current_variation_list[i],0))
+#             rand_ind = alphabets_sample.index(current[i]) + rand_change
+#             new += alphabets_sample[rand_ind]
+#     return new
+
 def mutate(current,current_variation_list):
     global alphabets_sample
     new = ""
@@ -35,19 +51,16 @@ def mutate(current,current_variation_list):
         if not(val):
             new += current[i]
         else:
-            rand_change = random.randint(min(current_variation_list[i],0),max(current_variation_list[i],0))
-            rand_ind = alphabets_sample.index(current[i]) + rand_change
-            # new += random.choice(alphabets_sample)
-            new += alphabets_sample[rand_ind]
+            # rand_change = random.randint(min(current_variation_list[i],0),max(current_variation_list[i],0))
+            # rand_ind = alphabets_sample.index(current[i]) + rand_change
+            new += random.choice(alphabets_sample)
     return new
-
 
 def survival_score(current,target):
     global alphabets_sample
     score = 0
     current_variation_list = []
     for i,val in enumerate(current):
-        # cur_score = ord(val) - ord(target[i])
         cur_score =  - alphabets_sample.index(val) + alphabets_sample.index(target[i])
 
         current_variation_list.append(cur_score)
@@ -55,16 +68,27 @@ def survival_score(current,target):
     return score, current_variation_list
 
 def test(tester,target):
+    global samples_per_generation
     t_score, t_current_variation_list = survival_score(tester,target)
     new = tester
-    for i in range(10):
+    for i in range(samples_per_generation):
         new = mutate(new,t_current_variation_list)
         t_score, t_current_variation_list = survival_score(new,target)
     return new
 
+def main():
+    global generation_list, samples_per_generation
 
-print(test(tester,target))
+    generation = 0
+    org_score, org_var_list, org = selection(generation_list)
+    while (org != target):
+        print(generation_list)
+        generation += 1
+        org_score, org_var_list, org = selection(generation_list)
+        generation_list = [mutate(org,org_var_list) for i in range(samples_per_generation)]
+    return generation
 
+print(main())
 
 # t_score, t_current_variation_list = survival_score(tester,target)
 # print(t_score,t_current_variation_list)
